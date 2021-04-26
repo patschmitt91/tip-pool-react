@@ -1,5 +1,6 @@
 import React from 'react';
 import StaffMember from './StaffMember.js';
+import './staffList.css';
 
 class Staff extends React.Component {
   constructor(props) {
@@ -32,8 +33,7 @@ class Staff extends React.Component {
       this._inputName.value = "";
       this._inputHour.value = "";
       this.props.onStaffChange(newState);
-    }
-     
+    }     
     //console.log(this.state.staff);  
     e.preventDefault();
   }
@@ -55,7 +55,7 @@ class Staff extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="staffContainer">
       <h6>Staff List</h6>
       
       <div className="header">

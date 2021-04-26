@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Staff from './Staff.js';
+import Staff from './components/staff-list/Staff.js';
+import ResultPanel from './components/result-panel/ResultPanel.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class App extends React.Component {
 
     this.state = {
       tipAmount: '',
-      eventLength: ''
+      eventLength: '',
+      calculated: ''
     };
 
  this.handleStaffChange = this.handleStaffChange.bind(this);
@@ -27,6 +29,7 @@ class App extends React.Component {
 
       if (this.state.staff) {
         this.calculateTotal();
+        console.log(this.state.staff)
       } else {
         console.log('empty as fuck');
       }
@@ -34,13 +37,15 @@ class App extends React.Component {
 
 
     handleStaffChange(staff) {
-      this.setState({staff: staff});
+      this.setState({staff: staff}, () => this.calculateTotal());
     }
 
     calculateTotal() {
+
       let tipAmount = this.state.tipAmount;
       let eventLength = parseInt(this.state.eventLength);
       let staffList = this.state.staff;
+
       let numOfPeople = staffList.length;
 
       // basic mean
@@ -61,36 +66,53 @@ class App extends React.Component {
         staffList[i].total = (tipAmount / hourTotal) * staffList[i].hour;
       }
 
-      console.log(staffList);
+      this.setState({staff: staffList});
+      this.setState({calculated: true});
+      console.log(this.state);
+      // Return a results component that we pass state into
+
     }
 
   render() {
+    let results;
+    if (this.state.calculated == true) {
+      results = <ResultPanel entries={this.state.staff} />
+    } else {
+     
+    }
+
     return (
       <div>
       <h1>Tip Pool v2</h1>
-       <label>
-          Tip Amount:
-          <input
-            name="tipAmount"
-            type="text"
-            onChange={this.handleInputChange} />
-        </label>
+      <div className="tipInput">
+         <label>
+            Tip Amount:
+            <input
+              name="tipAmount"
+              type="text"
+              onChange={this.handleInputChange} />
+          </label>
 
-        <label>
-          Event Length:
-          <input
-            name="eventLength"
-            type="text"
-            onChange={this.handleInputChange} />
-        </label>
+          <label>
+            Event Length:
+            <input
+              name="eventLength"
+              type="text"
+              onChange={this.handleInputChange} />
+          </label>
+        </div>
 
-       <h1>Tip Amount: {this.state.tipAmount}</h1>
-       <h1>Event Length: {this.state.eventLength}</h1>
+      <div className="tipInfo">
+       <h2>Tip Amount: {this.state.tipAmount}</h2>
+       <h2>Event Length: {this.state.eventLength}</h2>
+      </div>
 
        <Staff onStaffChange={this.handleStaffChange} />
 
-       <button onClick={this.calculateTotal}>Calculate</button>
-       </div>
+      <button id="calculateTotal" disabled={!this.state.staff} onClick={this.calculateTotal}>Calculate</button>
+
+              {results}
+              </div>
     );
   }
 }

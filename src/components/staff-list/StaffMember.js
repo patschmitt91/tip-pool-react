@@ -1,4 +1,5 @@
 import React from 'react';
+import './staffList.css';
 
 class StaffMember extends React.Component {
    constructor(props) {
