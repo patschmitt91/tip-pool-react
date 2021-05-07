@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Staff from './components/staff-list/Staff.js';
 import ResultPanel from './components/result-panel/ResultPanel.js';
+import Input from '@material-ui/core/Input';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -87,7 +89,7 @@ class App extends React.Component {
       <div className="tipInput">
          <label>
             Tip Amount:
-            <input
+            <Input
               name="tipAmount"
               type="text"
               onChange={this.handleInputChange} />
@@ -95,7 +97,7 @@ class App extends React.Component {
 
           <label>
             Event Length:
-            <input
+            <Input
               name="eventLength"
               type="text"
               onChange={this.handleInputChange} />
