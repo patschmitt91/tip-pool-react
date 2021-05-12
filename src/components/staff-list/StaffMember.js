@@ -1,5 +1,6 @@
 import React from 'react';
 import './staffList.css';
+import Button from '@material-ui/core/Button';
 
 class StaffMember extends React.Component {
    constructor(props) {
@@ -13,7 +14,7 @@ class StaffMember extends React.Component {
   }
 
   createStaffMember(staff) {
-    return <div><li>Name: {staff.name} - Hours: {staff.hour} <button onClick={() => this.delete(staff.key)} key={staff.key}>X</button></li></div>
+    return <div><li>Name: {staff.name} - Hours: {staff.hour} <Button variant="contained" color="primary" onClick={() => this.delete(staff.key)} key={staff.key}>X</Button></li></div>
   }
 
 
@@ -30,3 +31,5 @@ class StaffMember extends React.Component {
 };
 
 export default StaffMember;
+
+

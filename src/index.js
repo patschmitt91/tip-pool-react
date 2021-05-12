@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import About from './About';
 import History from './History';
-import Staff from './components/staff-list/Staff';
-import * as serviceWorker from './serviceWorker';
-
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const routes = [
   { path: '/', name: 'Tip Pool', Component: App },
@@ -17,27 +18,28 @@ const routes = [
   { path: '/history', name: 'History', Component: History }
 ]
 
+
+
 function Main() {
   return (
     <Router>
-      
-        <Navbar bg="light">
-          <Nav className="mx-auto">
-            {routes.map(route => (
-              <Nav.Link
-                key={route.path}
-                as={NavLink}
-                to={route.path}
-                activeClassName="active"
-                exact
-              >
-                {route.name}
-              </Nav.Link>
-            ))}
-          </Nav>
-        </Navbar>
 
-        <Container className="container">
+        <Paper>
+            <Tabs centered>
+                {routes.map(route => (
+                    <Nav.Link
+                        key={route.path}
+                        as={NavLink}
+                        to={route.path}
+                        exact
+                    >
+                        <Tab label={route.name} />
+                    </Nav.Link>
+                ))}
+            </Tabs>
+        </Paper>
+
+        <Container>
           {routes.map(({ path, Component }) => (
             <Route key={path} exact path={path}>
               {({ match }) => (

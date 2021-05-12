@@ -8,6 +8,14 @@ body {
   text-align: center;
 }
 
+a, a span {
+  text-decoration: none;
+  color: black;
+  font-weight: 400;
+  font-size: 1.3em;
+  font-family: Roboto;
+}
+
 
 /* TRANSITION */
 
@@ -42,3 +50,4 @@ body {
   transform: scale(0.9);
   transition: opacity 300ms, transform 300ms;
 }
+

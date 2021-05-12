@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import Staff from './components/staff-list/Staff.js';
 import ResultPanel from './components/result-panel/ResultPanel.js';
-import Input from '@material-ui/core/Input';
-
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,11 +47,7 @@ class App extends React.Component {
       let tipAmount = this.state.tipAmount;
       let eventLength = parseInt(this.state.eventLength);
       let staffList = this.state.staff;
-
       let numOfPeople = staffList.length;
-
-      // basic mean
-      let avgPerStaff = tipAmount / numOfPeople;
 
       // Calculate total number of hours worked
       let hourTotal = 0;
@@ -77,7 +73,7 @@ class App extends React.Component {
 
   render() {
     let results;
-    if (this.state.calculated == true) {
+    if (this.state.calculated === true) {
       results = <ResultPanel entries={this.state.staff} />
     } else {
      
@@ -86,32 +82,27 @@ class App extends React.Component {
     return (
       <div>
       <h1>Tip Pool v2</h1>
-      <div className="tipInput">
-         <label>
-            Tip Amount:
-            <Input
+      <div style={{display: 'flex', justifyContent: 'center'}} className="tipInput">
+          <TextField
               name="tipAmount"
               type="text"
-              onChange={this.handleInputChange} />
-          </label>
+              label="Tip Total"
+              onChange={this.handleInputChange}
+          />
 
-          <label>
-            Event Length:
-            <Input
+          <TextField
               name="eventLength"
               type="text"
-              onChange={this.handleInputChange} />
-          </label>
-        </div>
+              label="Event Length"
+              onChange={this.handleInputChange}
+          />
 
-      <div className="tipInfo">
-       <h2>Tip Amount: {this.state.tipAmount}</h2>
-       <h2>Event Length: {this.state.eventLength}</h2>
       </div>
+
 
        <Staff onStaffChange={this.handleStaffChange} />
 
-      <button id="calculateTotal" disabled={!this.state.staff} onClick={this.calculateTotal}>Calculate</button>
+      <Button variant="contained" color="primary" id="calculateTotal" disabled={!this.state.staff} onClick={this.calculateTotal}>Calculate</Button>
 
               {results}
               </div>
