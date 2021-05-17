@@ -11,16 +11,20 @@ class App extends React.Component {
 
     this.state = {
       tipAmount: '',
-      eventLength: '',
-      calculated: ''
+      calculated: '',
+      keyCounter: 0
     };
 
- this.handleStaffChange = this.handleStaffChange.bind(this);
- this.handleInputChange = this.handleInputChange.bind(this);
- this.calculateTotal = this.calculateTotal.bind(this);
+    // preserve the initial state in a new object
+    this.baseState = this.state;
 
+    this.handleStaffChange = this.handleStaffChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
+    this.resetAll = this.resetAll.bind(this);
   }
 
+    // Handles Text Field state change
     handleInputChange(event) {
       const target = event.target;
       const name = target.name;
@@ -33,42 +37,45 @@ class App extends React.Component {
         this.calculateTotal();
         console.log(this.state.staff)
       } else {
-        console.log('empty as fuck');
+        console.log('empty');
       }
     }
-
 
     handleStaffChange(staff) {
       this.setState({staff: staff}, () => this.calculateTotal());
     }
 
-    calculateTotal() {
+    resetAll = () => {
+     // Reset app component state
+      this.setState(this.baseState);
+      // create counter to force child component rerender upon key change
+      let newCounter = Math.random();
+      this.setState({ keyCounter: newCounter })
+    }
 
+    calculateTotal() {
       let tipAmount = this.state.tipAmount;
-      let eventLength = parseInt(this.state.eventLength);
       let staffList = this.state.staff;
       let numOfPeople = staffList.length;
 
-      // Calculate total number of hours worked
+      // Counter to calculate total number of hours worked
       let hourTotal = 0;
       for (let i = 0; i < numOfPeople; i++) {
         hourTotal += parseInt(staffList[i].hour);
       }
 
-      console.log(hourTotal);
-      // Will need to calculate each member's weight based on percentage of event worked
+      // Calculate each member's weight based on percentage of event worked
       for (let i = 0; i < numOfPeople; i++) {
-        let hoursWorked = parseInt(staffList[i].hour);
-        let percentOfEventWorked = hoursWorked / eventLength;
-        staffList[i].percentEventWorked = percentOfEventWorked * 100;
         staffList[i].total = (tipAmount / hourTotal) * staffList[i].hour;
+        staffList[i].percentOfPool = (staffList[i].total / tipAmount) * 100;
+        // Format to two decimal places
+        staffList[i].total = parseFloat(staffList[i].total).toFixed(2);
+        staffList[i].percentOfPool = parseFloat(staffList[i].percentOfPool).toFixed(2);
       }
 
+      // Set to state before passing to result component
       this.setState({staff: staffList});
       this.setState({calculated: true});
-      console.log(this.state);
-      // Return a results component that we pass state into
-
     }
 
   render() {
@@ -81,31 +88,26 @@ class App extends React.Component {
 
     return (
       <div>
-      <h1>Tip Pool v2</h1>
-      <div style={{display: 'flex', justifyContent: 'center'}} className="tipInput">
-          <TextField
-              name="tipAmount"
-              type="text"
-              label="Tip Total"
-              onChange={this.handleInputChange}
-          />
+        <h1>Tip Pool</h1>
 
-          <TextField
-              name="eventLength"
-              type="text"
-              label="Event Length"
-              onChange={this.handleInputChange}
-          />
+        <div style={{display: 'flex', justifyContent: 'center'}} className="tipInput">
+            <TextField
+                name="tipAmount"
+                type="text"
+                label="Tip Total"
+                value={this.state.tipAmount}
+                onChange={this.handleInputChange}
+            />
 
+        </div>
+
+         <Staff id="staffComponent" key={this.state.keyCounter} onStaffChange={this.handleStaffChange} />
+
+          <Button variant="contained" color="primary" id="calculateTotal" disabled={!this.state.staff} onClick={this.calculateTotal}>Calculate</Button>
+          <Button variant="contained" color="primary" id="resetBtn" disabled={!this.state.staff} onClick={this.resetAll}>Reset</Button>
+
+          {results}
       </div>
-
-
-       <Staff onStaffChange={this.handleStaffChange} />
-
-      <Button variant="contained" color="primary" id="calculateTotal" disabled={!this.state.staff} onClick={this.calculateTotal}>Calculate</Button>
-
-              {results}
-              </div>
     );
   }
 }

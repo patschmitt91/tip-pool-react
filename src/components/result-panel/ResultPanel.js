@@ -7,9 +7,10 @@ class ResultPanel extends React.Component {
   }
 
   render() {
-    var staffEntries = this.props.entries;
-    var listItems = staffEntries.map((staffMember) =>
-      <li>{staffMember.name} - {staffMember.total}</li>
+    let staffEntries = this.props.entries;
+
+    let listItems = staffEntries.map((staffMember) =>
+      <li>{staffMember.name} - {staffMember.total} - {staffMember.hour} Hours -  {staffMember.percentOfPool}% of Tips</li>
       // we need to expand this to cover the rest of the results
     ); 
  
@@ -19,6 +20,6 @@ class ResultPanel extends React.Component {
       </ul>
     );
   }
-};
+}
 
 export default ResultPanel;

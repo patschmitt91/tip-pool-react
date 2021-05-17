@@ -11,6 +11,9 @@ class About extends React.Component {
     return (
       <div>
       <h1>ABOUT</h1>
+        <p>Tip Pool exists to make pooling tips easier.</p>
+        <hr/>
+        <p>Features to come are - Point system and percent tip out types</p>
        </div>
     );
   }

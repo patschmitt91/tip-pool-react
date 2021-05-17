@@ -6,7 +6,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 
+
+
 class Staff extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -40,7 +43,9 @@ class Staff extends React.Component {
       });
     console.log(this.state.staff);
     this.myFormRef.reset();
-      this.props.onStaffChange(newState);
+    // refocus name input
+    document.getElementById("staffName").focus();
+    this.props.onStaffChange(newState);
 
 
     e.preventDefault();
@@ -73,7 +78,7 @@ class Staff extends React.Component {
         <Container>
           <div className="header">
             <form onSubmit={this.addItem} ref={(el) => this.myFormRef = el}>
-              <TextField label="Name" name="name" onChange={this.handleInputChange} required />
+              <TextField label="Name" name="name" id="staffName" onChange={this.handleInputChange} required />
               <TextField label="Hour" name="hour" onChange={this.handleInputChange} required />
               <Button variant="contained" color="primary" type="submit">add</Button>
             </form>

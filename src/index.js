@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import About from './About';
@@ -19,7 +19,7 @@ const routes = [
 ]
 
 
-
+// Navigation and animation wrapper for routed components
 function Main() {
   return (
     <Router>

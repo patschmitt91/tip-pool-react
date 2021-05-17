@@ -19,8 +19,8 @@ class StaffMember extends React.Component {
 
 
   render() {
-    var staffEntries = this.props.entries;
-    var listItems = staffEntries.map(this.createStaffMember);
+    let staffEntries = this.props.entries;
+    let listItems = staffEntries.map(this.createStaffMember);
  
     return (
       <ul className="theList">
@@ -28,7 +28,7 @@ class StaffMember extends React.Component {
       </ul>
     );
   }
-};
+}
 
 export default StaffMember;
 
